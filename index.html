@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felipe Lima Cotta — IA e Automação para Empresas</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #f5f4ed;
+    --ivory: #faf9f5;
+    --ink: #141413;
+    --body: #5e5d59;
+    --mut: #6f6e67;
+    --accent: #c96442;
+    --coral: #d97757;
+    --sand: #e8e6dc;
+    --charcoal: #4d4c48;
+    --line: #e8e6dc;
+    --cream: #f0eee6;
+    --silver: #b0aea5;
+    --dark: #141413;
+    --darksurface: #30302e;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: Georgia, 'Times New Roman', serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245, 244, 237, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--cream);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 600; font-size: 15px; letter-spacing: -0.2px; }
+  .logo b { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--body); }
+  .nav-links a:hover { color: var(--ink); }
+  .burger {
+    display: none; background: none; border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 11px; cursor: pointer;
+  }
+  .burger .bar { display: block; width: 17px; height: 2px; background: var(--ink); margin: 3px 0; border-radius: 1px; }
+  .burger:focus-visible { outline: 2px solid #3898ec; outline-offset: 2px; }
+  .btn {
+    display: inline-block; padding: 9px 18px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-accent { background: #b85632; color: var(--ivory); box-shadow: 0 0 0 1px #b85632; }
+  .btn-accent:hover { background: #a8512f; }
+  .btn-dark { background: var(--ink); color: var(--ivory); box-shadow: 0 0 0 1px var(--ink); }
+  .btn-dark:hover { background: #2b2b29; }
+  .btn-ghost { background: var(--sand); color: var(--charcoal); box-shadow: 0 0 0 1px #d1cfc5; }
+  .btn-ghost:hover { background: #dedccf; }
+
+  /* Hero */
+  .hero { padding: 108px 0 96px; }
+  .overline {
+    font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase;
+    color: #a8512f; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: Georgia, serif; font-weight: 500; font-size: clamp(38px, 5.6vw, 64px);
+    line-height: 1.1; letter-spacing: -0.5px; max-width: 28ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero .sub {
+    font-size: 19px; color: var(--body); max-width: 620px; margin: 28px 0 38px; line-height: 1.65;
+  }
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero .note { margin-top: 26px; font-size: 13px; color: var(--mut); }
+
+  /* Sections */
+  section { padding: 84px 0; }
+  .sec-head { max-width: 60ch; margin-bottom: 44px; }
+  .sec-head h2 {
+    font-family: Georgia, serif; font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 40px); line-height: 1.2; letter-spacing: -0.3px;
+    margin-top: 12px;
+  }
+  .sec-head p { color: var(--body); font-size: 16px; margin-top: 14px; }
+
+  /* Services — editorial list */
+  .svc-list { border-top: 1px solid var(--line); }
+  .svc {
+    display: grid; grid-template-columns: 72px 1fr; gap: 20px;
+    padding: 34px 4px; border-bottom: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+  .svc:hover { background: var(--ivory); }
+  .svc .num { font-family: Georgia, serif; font-size: 30px; color: var(--accent); font-weight: 500; line-height: 1; }
+  .svc h3 { font-family: Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.2px; }
+  .svc p { color: var(--body); font-size: 15.5px; margin-top: 8px; max-width: 62ch; }
+  .svc .deliver { margin-top: 10px; font-size: 13.5px; color: var(--charcoal); }
+  .svc .deliver b { color: var(--accent); font-weight: 500; }
+
+  /* Dark section */
+  .dark { background: var(--dark); color: var(--silver); }
+  .dark .sec-head h2 { color: var(--ivory); }
+  .dark .sec-head p { color: var(--silver); }
+  .dark .overline { color: var(--coral); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .about-grid p { font-size: 16px; line-height: 1.75; margin-bottom: 18px; }
+  .about-grid .big {
+    font-family: Georgia, serif; font-size: 30px; line-height: 1.35; color: var(--ivory); font-weight: 500;
+  }
+  .about-grid .big em { color: var(--coral); font-style: italic; }
+  .traits { margin-top: 8px; border-top: 1px solid var(--darksurface); }
+  .trait { padding: 16px 0; border-bottom: 1px solid var(--darksurface); display: flex; gap: 16px; font-size: 14.5px; }
+  .trait .mono { color: var(--coral); font-size: 12.5px; min-width: 52px; }
+
+  /* Projects */
+  .proj-list { border-top: 1px solid var(--line); }
+  .proj {
+    padding: 30px 4px; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start;
+  }
+  .proj h3 { font-family: Georgia, serif; font-size: 21px; font-weight: 500; }
+  .proj p { color: var(--body); font-size: 15px; margin-top: 7px; max-width: 70ch; }
+  .proj .meta { font-size: 12.5px; margin-top: 9px; }
+  .proj .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.4px;
+    color: var(--accent); border: 1px solid #e0c3b5; border-radius: 20px; padding: 4px 10px; white-space: nowrap;
+  }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--ivory); }
+  .step { padding: 30px 26px; border-right: 1px solid var(--line); }
+  .step:last-child { border-right: none; }
+  .step .n { font-family: Georgia, serif; font-size: 34px; color: var(--accent); font-weight: 500; line-height: 1; }
+  .step h4 { font-size: 15.5px; margin: 14px 0 8px; font-weight: 600; }
+  .step p { font-size: 13.5px; color: var(--body); }
+
+  /* Final CTA */
+  .final { background: var(--dark); color: var(--silver); }
+  .final .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px; align-items: center; }
+  .final h2 {
+    font-family: Georgia, serif; font-weight: 500; font-size: clamp(30px, 3.6vw, 44px);
+    color: var(--ivory); line-height: 1.2; letter-spacing: -0.3px;
+  }
+  .final h2 em { color: var(--coral); font-style: italic; }
+  .final .subp { margin-top: 18px; font-size: 16px; max-width: 46ch; }
+  .final .ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 30px; }
+  .final .contact-card { background: var(--darksurface); border: 1px solid #3d3d3a; border-radius: 16px; padding: 30px; }
+  .contact-card .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--mut); margin-bottom: 14px; }
+  .contact-card a { display: block; padding: 12px 0; border-top: 1px solid #3d3d3a; font-size: 15px; color: var(--silver); }
+  .contact-card a:first-of-type { border-top: none; }
+  .contact-card a:hover { color: var(--ivory); }
+  .contact-card a b { color: var(--ivory); font-weight: 500; }
+  .form-card { background: var(--darksurface); border: 1px solid #3d3d3a; border-radius: 16px; padding: 30px; }
+  .form-card .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--mut); margin-bottom: 18px; }
+  .form-row { margin-bottom: 14px; }
+  .form-row label { display: block; font-size: 13px; color: var(--silver); margin-bottom: 6px; }
+  .form-row input, .form-row select, .form-row textarea {
+    width: 100%; background: #262624; border: 1px solid #3d3d3a; border-radius: 10px;
+    color: var(--ivory); font-family: inherit; font-size: 14.5px; padding: 11px 13px; outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: #3898ec; }
+  .form-row textarea { min-height: 104px; resize: vertical; }
+  .form-row select { appearance: none; -webkit-appearance: none; }
+  .form-status { display: none; margin-top: 14px; font-size: 14px; border-radius: 10px; padding: 11px 13px; }
+  .form-status.ok { display: block; background: rgba(74, 131, 93, 0.18); color: #9fd8ae; border: 1px solid #3d6b4d; }
+  .form-status.err { display: block; background: rgba(181, 51, 51, 0.18); color: #e6a2a2; border: 1px solid #7a3a3a; }
+  .btn-submit { width: 100%; margin-top: 6px; text-align: center; border: none; cursor: pointer; font-family: inherit; }
+  .btn-submit[disabled] { opacity: 0.6; cursor: default; }
+
+  footer { border-top: 1px solid var(--cream); padding: 34px 0 44px; font-size: 13px; color: var(--mut); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    .burger { display: block; }
+    .nav-links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      background: var(--paper); border-bottom: 1px solid var(--cream);
+      flex-direction: column; gap: 6px; padding: 14px 28px 20px; box-shadow: rgba(0,0,0,0.06) 0 12px 24px;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 8px 0; font-size: 15px; }
+    .hero { padding: 72px 0 64px; }
+    section { padding: 60px 0; }
+    .about-grid, .final .wrap { grid-template-columns: 1fr; gap: 36px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(2) { border-right: none; }
+    .step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .proj { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: none; }
+    .svc { grid-template-columns: 1fr; gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    nav { backdrop-filter: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Felipe Lima <b>Cotta</b></div>
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <button class="burger" aria-label="Abrir menu" aria-expanded="false" onclick="this.classList.toggle('open');document.querySelector('.nav-links').classList.toggle('open');this.setAttribute('aria-expanded', document.querySelector('.nav-links').classList.contains('open'))">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <a href="#contato" class="btn btn-accent">Falar comigo</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="overline">Consultoria de IA &amp; Automação · Belo Horizonte / Remoto</div>
+    <h1>Sua empresa usando IA de verdade — <em>em semanas, não em promessas.</em></h1>
+    <p class="sub">Desenvolvo projetos de IA sob medida, implemento automações nos seus processos e treino sua equipe para usar as ferramentas no dia a dia — com foco em resultado, não em tecnologia pela tecnologia.</p>
+    <div class="ctas">
+      <a href="#contato" class="btn btn-accent">Quero uma conversa gratuita</a>
+      <a href="#projetos" class="btn btn-ghost">Ver projetos</a>
+    </div>
+    <div class="note">Atendimento presencial em BH e remoto para todo o Brasil · PMEs e comércio</div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">O que eu faço</div>
+      <h2>Três frentes, um objetivo: IA que entrega valor no seu negócio.</h2>
+      <p>Você escolhe onde quer começar — projeto, implementação ou capacitação. Ou os três, na ordem certa para a sua empresa.</p>
+    </div>
+    <div class="svc-list">
+      <div class="svc">
+        <div class="num">01</div>
+        <div>
+          <h3>Desenvolvimento de projetos de IA</h3>
+          <p>Automações de processos, agentes de IA, integração de sistemas e pipelines de dados sob medida para o seu problema — não um robô genérico, mas a solução da sua operação.</p>
+          <div class="deliver"><b>Entrega:</b> projeto funcionando e documentado, com seu time sabendo operar.</div>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="num">02</div>
+        <div>
+          <h3>Implementação de IA nas empresas</h3>
+          <p>Diagnóstico do que realmente faz sentido automatizar, roadmap de adoção e implantação acompanhada — desde o piloto até o uso diário pelos seus colaboradores.</p>
+          <div class="deliver"><b>Entrega:</b> processo real transformado, com métricas antes e depois.</div>
+        </div>
+      </div>
+      <div class="svc">
+        <div class="num">03</div>
+        <div>
+          <h3>Treinamento de equipes</h3>
+          <p>Workshops práticos de ferramentas de IA para times de qualquer área: produtividade, automação de tarefas repetitivas e uso correto de IA generativa. Aprendizado aplicado, não teoria.</p>
+          <div class="deliver"><b>Entrega:</b> equipe que usa IA no dia seguinte, sem depender de assistência técnica.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="sobre">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Por que eu</div>
+      <h2>Eu falo a língua do negócio e a língua da tecnologia.</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p class="big">Vim do mundo comercial, do dia a dia de laboratórios e hospitais — e hoje construo projetos de IA <em>na prática, aprendendo sozinho.</em></p>
+        <p>Não vim de uma carreira acadêmica nem de uma big tech. Vim do chão de fábrica do comércio e da saúde, onde o problema nunca é "falta de IA" — e sim processo que funciona e gente que usa.</p>
+        <p>Autodidata em tecnologia: aprendo sozinho, construo, erro, corrijo e entrego funcionando. Meus projetos rodam em produção 24/7 — e meu papel é ser a ponte: entender sua operação, projetar a solução certa e ensinar seu time a usar.</p>
+      </div>
+      <div class="traits">
+        <div class="trait"><span class="mono">01</span><span><b>Resultado primeiro.</b> Projeto só termina quando o processo da sua empresa muda de verdade — com métrica antes e depois.</span></div>
+        <div class="trait"><span class="mono">02</span><span><b>Sem jargão.</b> Eu explico o que a IA vai fazer pelo seu negócio em linguagem de dono de empresa, não de cientista.</span></div>
+        <div class="trait"><span class="mono">03</span><span><b>Didática de campo.</b> Conhecimento técnico aprendido na prática e explicado em linguagem de dono de empresa — seu time aprende de verdade, não assiste a uma palestra.</span></div>
+        <div class="trait"><span class="mono">04</span><span><b>Honestidade técnica.</b> Se IA não resolver seu problema, eu te digo — e sugiro o que resolve.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Projetos</div>
+      <h2>O que já está rodando.</h2>
+      <p>Projetos em produção — sistemas reais, operando 24/7, desenvolvidos e mantidos por mim.</p>
+    </div>
+    <div class="proj-list">
+      <div class="proj">
+        <div>
+          <h3>Vigia Core — plataforma de automação com agentes de IA</h3>
+          <p>Sistema autônomo (Python + agentes via MCP + APIs) que monitora, analisa e executa operações 24/7: sensores de dados, pipeline de decisão, alertas e execução automatizada com camada de supervisão.</p>
+          <div class="meta mono">python · mcp · agentes · apis · fix · linux</div>
+        </div>
+        <span class="tag">EM PRODUÇÃO</span>
+      </div>
+      <div class="proj">
+        <div>
+          <h3>Automação de presença digital e monitoramento</h3>
+          <p>Pipeline que monitora concorrentes e notícias com alertas automáticos, e automatiza o conteúdo e o agendamento de publicações em plataformas sociais.</p>
+          <div class="meta mono">agentes · rss/apis · alertas · automação de conteúdo</div>
+        </div>
+        <span class="tag">EM PRODUÇÃO</span>
+      </div>
+      <div class="proj">
+        <div>
+          <h3>Assistente de integração via MCP</h3>
+          <p>Model Context Protocol para conectar as ferramentas do dia a dia a agentes de IA: tarefas repetitivas automatizadas, dados coletados e organizados sem retrabalho.</p>
+          <div class="meta mono">mcp · integração · produtividade</div>
+        </div>
+        <span class="tag">PROJETO PESSOAL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Como funciona</div>
+      <h2>Um caminho simples, sem enrolação.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h4>Conversa e diagnóstico</h4>
+        <p>Entendo seu processo, seu problema e o que IA realmente pode resolver por você. Gratuito e sem compromisso.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h4>Proposta clara</h4>
+        <p>Escopo, prazo e preço definidos. Você decide o que faz sentido: projeto, treinamento ou os dois.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h4>Execução acompanhada</h4>
+        <p>Eu desenvolvo e implemento com seu time junto — ninguém recebe uma "caixa preta" no final.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h4>Entrega + suporte</h4>
+        <p>Projeto documentado, equipe treinada e suporte para estabilizar. Depois, é decisão sua continuar evoluindo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="contato">
+  <div class="wrap">
+    <div>
+      <div class="overline">Contato</div>
+      <h2>Vamos tirar sua empresa <em>do papel?</em></h2>
+      <p class="subp">Preencha o formulário com sua proposta ou dúvida. Eu respondo direto no seu e-mail — geralmente no mesmo dia.</p>
+      <div class="ctas">
+        <a href="#formulario" class="btn btn-accent">Enviar proposta agora</a>
+      </div>
+      <p class="subp" style="margin-top:26px;font-size:14px;color:var(--mut);">Ou conecte-se pelo LinkedIn: <a href="https://www.linkedin.com/in/felipe-lima-cotta" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px;">in/felipe-lima-cotta</a></p>
+    </div>
+    <div class="form-card" id="formulario">
+      <div class="lbl">Solicite contato ou proposta</div>
+      <form id="contatoForm" novalidate>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <label for="f-nome">Seu nome *</label>
+          <input id="f-nome" name="name" type="text" required placeholder="Como podemos te chamar">
+        </div>
+        <div class="form-row">
+          <label for="f-email">Seu e-mail *</label>
+          <input id="f-email" name="email" type="email" required placeholder="para eu responder">
+        </div>
+        <div class="form-row">
+          <label for="f-tipo">O que você precisa?</label>
+          <select id="f-tipo" name="_subject">
+            <option value="Proposta - Desenvolvimento de projeto de IA">Projeto de IA sob medida</option>
+            <option value="Proposta - Implementacao de IA na empresa">Implementação de IA na empresa</option>
+            <option value="Proposta - Treinamento de equipe">Treinamento de equipe</option>
+            <option value="Proposta - Outro assunto">Outro assunto</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="f-msg">Mensagem *</label>
+          <textarea id="f-msg" name="message" required placeholder="Conte rapidamente o que você precisa: processo, prazo, tamanho do time..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-accent btn-submit">Enviar proposta</button>
+        <div class="form-status" id="formStatus" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Felipe Lima Cotta — Consultoria de IA &amp; Automação</span>
+    <span><a href="https://www.linkedin.com/in/felipe-lima-cotta" target="_blank" rel="noopener">LinkedIn</a> · Belo Horizonte, MG · © 2026</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // destino montado em runtime (nao aparece como texto na pagina)
+  var destino = ['felipe', '.0789', 'fl', '@', 'gmail', '.com'].join('');
+  var form = document.getElementById('contatoForm');
+  var statusEl = document.getElementById('formStatus');
+  var btn = form.querySelector('button[type="submit"]');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var dados = {
+      name: document.getElementById('f-nome').value.trim(),
+      email: document.getElementById('f-email').value.trim(),
+      _subject: document.getElementById('f-tipo').value,
+      message: document.getElementById('f-msg').value.trim(),
+      _template: 'table',
+      _captcha: 'false'
+    };
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    statusEl.className = 'form-status';
+    fetch('https://formsubmit.co/ajax/' + destino, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(dados)
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d.success) {
+        statusEl.className = 'form-status ok';
+        statusEl.textContent = 'Proposta enviada! Respondo no seu e-mail em até 24h úteis.';
+        form.reset();
+      } else {
+        throw new Error('falha');
+      }
+    })
+    .catch(function () {
+      statusEl.className = 'form-status err';
+      statusEl.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Enviar proposta';
+    });
+  });
+})();
+</script>
+</body>
+</html>
