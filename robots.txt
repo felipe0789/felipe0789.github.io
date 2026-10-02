@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://felipe0789.github.io/sitemap.xml
